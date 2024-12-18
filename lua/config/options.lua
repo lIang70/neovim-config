@@ -17,7 +17,7 @@ opt.wrap = false
 opt.cursorline = true
 
 opt.mouse:append("a")
-opt.clipboard:append("unnamedplus")
+opt.clipboard = "unnamedplus"
 
 opt.splitright = true
 opt.splitbelow = true
