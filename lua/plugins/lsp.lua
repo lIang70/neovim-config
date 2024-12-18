@@ -18,6 +18,7 @@ return {
                 "lua-language-server",
                 "pyproject-flake8",
                 "python-lsp-server",
+                "rust-analyzer",
             },
         },
     },
@@ -45,6 +46,9 @@ return {
                 pyright = {},
                 bacon_ls = {
                     enabled = diagnostics == "bacon-ls",
+                },
+                rust_analyzer = {
+                    enabled = false,
                 },
             },
             -- you can do any additional lsp server setup here
