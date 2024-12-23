@@ -4,44 +4,41 @@
 
 vim.g.mapleader = " "
 
-vim.api.nvim_set_keymap("v", "<C-c>", '"+y', { noremap = true, silent = true })
+local map = vim.api.nvim_set_keymap
+local opt = { noremap = true, silent = true }
 
-vim.api.nvim_set_keymap("i", "<C-v>", "<C-r>+", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap("n", "<C-v>", '"+p', { noremap = true, silent = true })
-
-local keymap = vim.keymap
+-- copy-paste
+map("v", "<C-c>", '"+y', opt)
+map("i", "<C-v>", "<C-r>+", opt)
+map("n", "<C-v>", '"+p', opt)
 
 -- visual line
-keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv", opt)
+map("v", "K", ":m '<-2<CR>gv=gv", opt)
 
-keymap.set("n", "<leader>sv", "<C-w>v")
-keymap.set("n", "<leader>sh", "<C-w>s")
+-- window
+map("n", "sc", "<C-w>c", opt)
+map("n", "so", "<C-w>o", opt)
 
-keymap.set("n", "<leader>nh", ":nohl<CR>")
+-- split
+map("n", "<leader>sv", "<C-w>v", opt)
+map("n", "<leader>sh", "<C-w>s", opt)
 
 -- nvim-tree
-keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
-keymap.set("n", "<C-Up>", "<C-w>k")
-keymap.set("n", "<C-Down>", "<C-w>j")
-keymap.set("n", "<C-Left>", "<C-w>h")
-keymap.set("n", "<C-Right>", "<C-w>l")
+map("n", "<A-Up>", "<C-w>k", opt)
+map("n", "<A-Down>", "<C-w>j", opt)
+map("n", "<A-Left>", "<C-w>h", opt)
+map("n", "<A-Right>", "<C-w>l", opt)
 
--- comment
-keymap.set("n", "<C-/>", "gcc")
+-- buffer
+map("n", "<S-Right>", ":bnext<CR>", opt)
+map("n", "<S-Left>", ":bprevious<CR>", opt)
+map("n", "<S-x>", ":bdelete<CR>", opt)
 
-keymap.set("n", "<S-Right>", ":bnext<CR>")
-keymap.set("n", "<S-Left>", ":bprevious<CR>")
+-- visual
+map("v", "<", "<gv", opt)
+map("v", ">", ">gv", opt)
 
-vim.cmd([[
-nmap <F9> <cmd>call vimspector#Launch()<cr>
-nmap <F5> <cmd>call vimspector#StepOver()<cr>
-nmap <F8> <cmd>call vimspector#Reset()<cr>
-nmap <F11> <cmd>call vimspector#StepOver()<cr>")
-nmap <F12> <cmd>call vimspector#StepOut()<cr>")
-nmap <F10> <cmd>call vimspector#StepInto()<cr>")
-]])
-keymap.set("n", "Db", ":call vimspector#ToggleBreakpoint()<cr>")
-keymap.set("n", "Dw", ":call vimspector#AddWatch()<cr>")
-keymap.set("n", "De", ":call vimspector#Evaluate()<cr>")
+-- lspsage
+map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opt) -- rename
+map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opt) -- code action

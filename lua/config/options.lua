@@ -2,8 +2,17 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--- Global Clipboard
-vim.g.clipboard = {
+local vg = vim.g
+local vopt = vim.opt
+local vo = vim.o
+local vwo = vim.wo
+
+-- utf8
+vg.encodinf = "UTF-8"
+vo.fileencoding = "utf-8"
+
+-- clipboard
+vg.clipboard = {
     name = "WslClipboard",
     copy = {
         ["+"] = "clip.exe",
@@ -15,42 +24,42 @@ vim.g.clipboard = {
     },
     cache_enable = 0,
 }
+vopt.clipboard = "unnamedplus"
 
--- LSP Server to use for Rust.
--- Set to "bacon-ls" to use bacon-ls instead of rust-analyzer.
+-- line
+vopt.relativenumber = true
+vopt.number = true
+vopt.wrap = false --
+vopt.cursorline = true -- highlight
+vo.whichwrap = "<,>,[,]"
+
+-- mouse
+vopt.mouse:append("a")
+
+-- tab
+vopt.tabstop = 4
+vopt.shiftwidth = 4
+vopt.expandtab = true
+
+-- alignment
+vopt.autoindent = true
+
+-- window
+vwo.colorcolumn = "80"
+vopt.splitright = true
+vopt.splitbelow = true
+vopt.signcolumn = "yes"
+vopt.termguicolors = true
+
+-- search
+vopt.ignorecase = true
+vopt.smartcase = true
+
+-- auto complete
+vg.completeopt = "menu,menuone,noselect,noinsert"
+
+-- lsp server to use for rust.
+-- set to "bacon-ls" to use bacon-ls instead of rust-analyzer.
 -- only for diagnostics. The rest of LSP support will still be
 -- provided by rust-analyzer.
-vim.g.lazyvim_rust_diagnostics = "rust-analyzer"
-
-local opt = vim.opt
-
--- line number
-opt.relativenumber = true
-opt.number = true
-
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.expandtab = true
-opt.autoindent = true
-
-opt.wrap = false
-opt.cursorline = true
-
-opt.mouse:append("a")
-opt.clipboard = "unnamedplus"
-
-opt.splitright = true
-opt.splitbelow = true
-
-opt.ignorecase = true
-opt.smartcase = true
-
-opt.termguicolors = true
-opt.signcolumn = "yes"
-
--- Vimspector options
-vim.cmd([[
-let g:vimspector_sidebar_width = 85
-let g:vimspector_bottombar_height = 15
-let g:vimspector_terminal_maxwidth = 70
-]])
+vg.lazyvim_rust_diagnostics = "rust-analyzer"
