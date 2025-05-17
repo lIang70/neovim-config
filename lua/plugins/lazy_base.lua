@@ -33,9 +33,12 @@ return {
     -- add more treesitter parsers
     {
         "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
         opts = {
             ensure_installed = {
                 "bash",
+                "c",
+                "cpp",
                 "html",
                 "javascript",
                 "json",
@@ -51,6 +54,8 @@ return {
                 "vim",
                 "yaml",
             },
+            highlight = { enable = true },
+            indent = { enable = true },
         },
     },
 }
