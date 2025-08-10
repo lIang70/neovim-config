@@ -20,6 +20,24 @@ return {
             vim.keymap.set("n", "<Leader>b", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
             vim.keymap.set("n", "<Leader>dr", dapui.toggle, { desc = "DAP: Toggle UI" })
 
+            -- poetry configuration
+            dap.adapters.python = {
+                type = "executable",
+                command = "python",
+                args = { "-m", "debugpy.adapter" },
+            }
+            dap.configurations.python = {
+                {
+                    type = "python",
+                    request = "launch",
+                    name = "Debug current file",
+                    program = "${file}",
+                    pythonPath = function()
+                        return vim.fn.exepath("python") -- auto detect Poetry
+                    end,
+                },
+            }
+
             -- cpptools configuration
             dap.adapters.cppdbg = {
                 id = "cppdbg",
