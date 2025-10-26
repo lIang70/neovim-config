@@ -1,7 +1,6 @@
 return {
-
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {
             ui = {
                 icons = {
@@ -25,66 +24,57 @@ return {
         },
     },
 
-    { "williamboman/mason-lspconfig.nvim" },
+    { "mason-org/mason-lspconfig.nvim" },
 
     {
         "neovim/nvim-lspconfig",
         dependencies = {
             "jose-elias-alvarez/typescript.nvim",
-            init = function()
-                require("lazyvim.util").lsp.on_attach(function(_, buffer)
-                    -- stylua: ignore
-                    vim.keymap.set("n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
-                    vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
-                end)
-            end,
         },
-        ---@class PluginLspOpts
+        init = function()
+            local function typescript_keymaps(bufnr)
+                -- stylua: ignore
+                vim.keymap.set(
+                    "n",
+                    "<leader>co",
+                    "<cmd>TypescriptOrganizeImports<CR>",
+                    { buffer = bufnr, desc = "Organize Imports" })
+                vim.keymap.set(
+                    "n",
+                    "<leader>cR",
+                    "<cmd>TypescriptRenameFile<CR>",
+                    { desc = "Rename File", buffer = bufnr }
+                )
+            end
+
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+                    if client and client.name == "tsserver" then
+                        typescript_keymaps(bufnr)
+                    end
+                end,
+            })
+        end,
         opts = {
-            ---@type lspconfig.options
             servers = {
-                -- tsserver will be automatically installed with mason and loaded with lspconfig
-                ts_sl = {},
+                tsserver = {},
                 pyright = {},
-                bacon_ls = {
-                    enabled = diagnostics == "bacon-ls",
-                },
                 rust_analyzer = {
                     enabled = false,
                 },
             },
-            -- you can do any additional lsp server setup here
-            -- return true if you don't want this server to be setup with lspconfig
-            ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
             setup = {
-                -- example to setup with typescript.nvim
-                ts_sl = function(_, opts)
+                tsserver = function(_, opts)
                     require("typescript").setup({ server = opts })
                     return true
                 end,
-                -- Specify * to use this function as a fallback for any server
-                -- ["*"] = function(server, opts) end,
             },
         },
-        config = function()
-            local lspconfig = require("lspconfig")
-
-            -- Configure clangd
-            lspconfig.clangd.setup({
-                filetypes = { "c", "cpp" },
-                cmd = { "clangd", "--background-index" },
-                on_attach = function(client, bufnr)
-                    -- Keymaps for LSP
-                    local opts = { buffer = bufnr }
-                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-                    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-                    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                end,
-            })
-        end,
     },
+
     {
         "tami5/lspsaga.nvim",
         setup = {
