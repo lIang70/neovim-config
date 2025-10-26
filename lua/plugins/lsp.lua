@@ -63,7 +63,28 @@ return {
                 tsserver = {},
                 pyright = {},
                 rust_analyzer = {
-                    enabled = false,
+                    settings = {
+                        ["rust-analyzer"] = {
+                            cargo = {
+                                allFeatures = true,
+                                loadOutDirsFromCheck = true,
+                                runBuildScripts = true,
+                            },
+                            checkOnSave = {
+                                allFeatures = true,
+                                command = "clippy",
+                                extraArgs = { "--no-deps" },
+                            },
+                            procMacro = {
+                                enable = true,
+                            },
+                            formatting = {
+                                rustfmt = {
+                                    enable = true,
+                                },
+                            },
+                        },
+                    },
                 },
             },
             setup = {
