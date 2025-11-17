@@ -12,19 +12,32 @@ vg.encodinf = "UTF-8"
 vo.fileencoding = "utf-8"
 
 -- clipboard
+-- vg.clipboard = {
+--    name = "WslClipboard",
+--    copy = {
+--        ["+"] = "clip.exe",
+--        ["*"] = "clip.exe",
+--    },
+--    paste = {
+--        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+--        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+--    },
+--    cache_enable = 0,
+--}
+--vopt.clipboard = "unnamedplus"
+
 vg.clipboard = {
-    name = "WslClipboard",
+    name = "macOS-clipboard",
     copy = {
-        ["+"] = "clip.exe",
-        ["*"] = "clip.exe",
+        ["+"] = "pbcopy",
+        ["*"] = "pbcopy",
     },
     paste = {
-        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        ["+"] = "pbpaste",
+        ["*"] = "pbpaste",
     },
-    cache_enable = 0,
+    cache_enabled = true,
 }
-vopt.clipboard = "unnamedplus"
 
 -- line
 vopt.relativenumber = true
