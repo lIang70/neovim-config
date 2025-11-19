@@ -4,6 +4,7 @@ return {
         dependencies = {
             "rcarriga/nvim-dap-ui", -- Optional UI for dap
             "mxsdev/nvim-dap-vscode-js", -- For JavaScript debugging
+            "leoluz/nvim-dap-go", -- For Golang debuging
         },
         config = function()
             local dap = require("dap")
