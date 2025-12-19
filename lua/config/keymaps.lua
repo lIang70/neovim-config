@@ -24,15 +24,9 @@ map("n", "so", "<C-w>o", opt)
 map("n", "<leader>sv", "<C-w>v", opt)
 map("n", "<leader>sh", "<C-w>s", opt)
 
--- nvim-tree
-map("n", "<A-Up>", "<C-w>k", opt)
-map("n", "<A-Down>", "<C-w>j", opt)
-map("n", "<A-Left>", "<C-w>h", opt)
-map("n", "<A-Right>", "<C-w>l", opt)
-
 -- buffer
-map("n", "<S-Right>", ":bnext<CR>", opt)
-map("n", "<S-Left>", ":bprevious<CR>", opt)
+map("n", "<S-l>", ":bnext<CR>", opt)
+map("n", "<S-h>", ":bprevious<CR>", opt)
 map("n", "<S-x>", ":bdelete<CR>", opt)
 
 -- visual
