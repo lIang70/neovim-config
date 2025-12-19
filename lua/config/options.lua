@@ -6,38 +6,56 @@ local vg = vim.g
 local vopt = vim.opt
 local vo = vim.o
 local vwo = vim.wo
+local has = vim.fn.has
 
 -- utf8
 vg.encodinf = "UTF-8"
 vo.fileencoding = "utf-8"
+-- clipboard: macOS / WSL auto
 
--- clipboard
--- vg.clipboard = {
---    name = "WslClipboard",
---    copy = {
---        ["+"] = "clip.exe",
---        ["*"] = "clip.exe",
---    },
---    paste = {
---        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
---        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
---    },
---    cache_enable = 0,
---}
---vopt.clipboard = "unnamedplus"
-
-vg.clipboard = {
-    name = "macOS-clipboard",
-    copy = {
-        ["+"] = "pbcopy",
-        ["*"] = "pbcopy",
-    },
-    paste = {
-        ["+"] = "pbpaste",
-        ["*"] = "pbpaste",
-    },
-    cache_enabled = true,
-}
+if has("mac") == 1 then
+    vg.clipboard = {
+        name = "macOS-clipboard",
+        copy = {
+            ["+"] = { "pbcopy" },
+            ["*"] = { "pbcopy" },
+        },
+        paste = {
+            ["+"] = { "pbpaste" },
+            ["*"] = { "pbpaste" },
+        },
+        cache_enabled = true,
+    }
+    vopt.clipboard = "unnamedplus"
+elseif has("wsl") == 1 then
+    vg.clipboard = {
+        name = "Wsl-clipboard",
+        copy = {
+            ["+"] = { "clip.exe" },
+            ["*"] = { "clip.exe" },
+        },
+        paste = {
+            ["+"] = {
+                "powershell.exe",
+                "-NoProfile",
+                "-Command",
+                [[
+        [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))
+      ]],
+            },
+            ["*"] = {
+                "powershell.exe",
+                "-NoProfile",
+                "-Command",
+                [[
+        [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))
+      ]],
+            },
+        },
+        cache_enabled = false,
+    }
+    vopt.clipboard = "unnamedplus"
+end
 
 -- line
 vopt.relativenumber = true
