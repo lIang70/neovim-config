@@ -38,10 +38,6 @@ map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opt) -- rename
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opt) -- code action
 
 -- terminal
-map("n", "<leader>th", ":split | terminal<CR>", { noremap = true, silent = true })
-map("n", "<leader>tv", ":vsplit | terminal<CR>", { noremap = true, silent = true })
-map("n", "<leader>tf", ":tabnew | terminal<CR>", { noremap = true, silent = true })
-
 map("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 map("t", "<C-h>", "<C-\\><C-n><C-w>h", { noremap = true })
 map("t", "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true })
