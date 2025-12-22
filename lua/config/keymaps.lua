@@ -24,9 +24,15 @@ map("n", "so", "<C-w>o", opt)
 map("n", "<leader>sv", "<C-w>v", opt)
 map("n", "<leader>sh", "<C-w>s", opt)
 
+-- window
+map("n", "<leader><Up>", "<C-w>k", opt)
+map("n", "<leader><Down>", "<C-w>j", opt)
+map("n", "<leader><Left>", "<C-w>h", opt)
+map("n", "<leader><Right>", "<C-w>l", opt)
+
 -- buffer
-map("n", "<S-l>", ":bnext<CR>", opt)
-map("n", "<S-h>", ":bprevious<CR>", opt)
+map("n", "<S-Right>", ":bnext<CR>", opt)
+map("n", "<S-Left>", ":bprevious<CR>", opt)
 map("n", "<S-x>", ":bdelete<CR>", opt)
 
 -- visual
