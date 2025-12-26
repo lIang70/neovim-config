@@ -1,6 +1,9 @@
 return {
     {
         "folke/neoconf.nvim",
+        -- make sure neoconf is initialized early, before any lspconfig setups
+        lazy = false,
+        priority = 1000,
         opts = {
             -- name of the local settings files
             local_settings = ".neoconf.json",
@@ -40,5 +43,18 @@ return {
                 },
             },
         },
+        config = function(_, opts)
+            -- neoconf must be setup BEFORE any lspconfig server setup
+            require("neoconf").setup(opts)
+
+            -- neoconf healthcheck uses lspconfig.util.available_servers(), which only lists
+            -- servers that have been setup via lspconfig.setup(). LazyVim/Nvim0.11 uses vim.lsp.config,
+            -- so we register these servers with autostart=false to avoid duplicate clients.
+            pcall(function()
+                local lspconfig = require("lspconfig")
+                lspconfig.lua_ls.setup({ autostart = false })
+                lspconfig.jsonls.setup({ autostart = false })
+            end)
+        end,
     },
 }
