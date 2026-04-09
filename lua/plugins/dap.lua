@@ -2,44 +2,11 @@ return {
     {
         "mfussenegger/nvim-dap",
         dependencies = {
-            "rcarriga/nvim-dap-ui", -- Optional UI for dap
-            "mxsdev/nvim-dap-vscode-js", -- For JavaScript debugging
-            "leoluz/nvim-dap-go", -- For Golang debuging
+            "mxsdev/nvim-dap-vscode-js",
         },
-        config = function()
+        opts = function()
             local dap = require("dap")
-            local dapui = require("dapui")
 
-            -- DAP UI setup
-            dapui.setup()
-
-            -- Keymaps
-            vim.keymap.set("n", "<F5>", dap.continue, { desc = "DAP: Continue" })
-            vim.keymap.set("n", "<F10>", dap.step_over, { desc = "DAP: Step Over" })
-            vim.keymap.set("n", "<F11>", dap.step_into, { desc = "DAP: Step Into" })
-            vim.keymap.set("n", "<F12>", dap.step_out, { desc = "DAP: Step Out" })
-            vim.keymap.set("n", "<Leader>b", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
-            vim.keymap.set("n", "<Leader>dr", dapui.toggle, { desc = "DAP: Toggle UI" })
-
-            -- poetry configuration
-            dap.adapters.python = {
-                type = "executable",
-                command = "python",
-                args = { "-m", "debugpy.adapter" },
-            }
-            dap.configurations.python = {
-                {
-                    type = "python",
-                    request = "launch",
-                    name = "Debug current file",
-                    program = "${file}",
-                    pythonPath = function()
-                        return vim.fn.exepath("python") -- auto detect Poetry
-                    end,
-                },
-            }
-
-            -- cpptools configuration
             dap.adapters.cppdbg = {
                 id = "cppdbg",
                 type = "executable",
@@ -60,12 +27,5 @@ return {
             }
             dap.configurations.c = dap.configurations.cpp
         end,
-    },
-    {
-        "rcarriga/nvim-dap-ui",
-        dependencies = {
-            "nvim-neotest/nvim-nio",
-            "mfussenegger/nvim-dap",
-        },
     },
 }

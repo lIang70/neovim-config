@@ -1,9 +1,10 @@
 return {
     {
         "folke/neoconf.nvim",
-        -- make sure neoconf is initialized early, before any lspconfig setups
+        -- must load after snacks.nvim (priority 1000) since LazyVim LSP keymaps depend on Snacks
         lazy = false,
-        priority = 1000,
+        priority = 900,
+        dependencies = { "folke/snacks.nvim" },
         opts = {
             -- name of the local settings files
             local_settings = ".neoconf.json",
@@ -11,9 +12,9 @@ return {
             global_settings = "neoconf.json",
             -- import existing settings from other plugins
             import = {
-                vscode = true, -- local .vscode/settings.json
-                coc = true, -- global/local coc-settings.json
-                nlsp = true, -- global/local nlsp-settings.nvim json settings
+                vscode = true,
+                coc = false,
+                nlsp = false,
             },
             -- send new configuration to lsp clients when changing json settings
             live_reload = true,

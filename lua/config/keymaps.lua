@@ -2,15 +2,11 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-vim.g.mapleader = " "
-
 local map = vim.api.nvim_set_keymap
 local opt = { noremap = true, silent = true }
 
--- copy-paste
-map("v", "<C-c>", '"+y', opt)
+-- paste from system clipboard in insert mode
 map("i", "<C-v>", "<C-r>+", opt)
-map("n", "<C-v>", '"+p', opt)
 
 -- visual line
 map("v", "J", ":m '>+1<CR>gv=gv", opt)
@@ -38,10 +34,6 @@ map("n", "<S-x>", ":bdelete<CR>", opt)
 -- visual
 map("v", "<", "<gv", opt)
 map("v", ">", ">gv", opt)
-
--- lspsage
-map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opt) -- rename
-map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opt) -- code action
 
 -- terminal
 map("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
