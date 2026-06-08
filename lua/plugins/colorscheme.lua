@@ -1,11 +1,11 @@
 return {
   {
-    "rose-pine/nvim",
-    name = "rose-pine",
+    "Shatur/neovim-ayu",
+    name = "ayu",
     priority = 1000,
   },
   {
     "LazyVim/LazyVim",
-    opts = { colorscheme = "rose-pine-moon" },
+    opts = { colorscheme = "ayu-mirage" },
   },
 }
